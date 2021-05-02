@@ -7,13 +7,15 @@
 
 #include "PlayerInterface.h"
 
-class traps: public PlayerInterface{
+class trap: public PlayerInterface{
 private:
     int trapLengt;
 public:
-    traps(int x, int y);
-    virtual void Animate(int vx, int vy);
+    trap(int x, int y);
     int trap_lengt() const;
+    int getX() const;
+    int getY() const;
+    void draw(CImg<unsigned char>& img) const;
 };
 
 

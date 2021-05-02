@@ -8,6 +8,7 @@
 #include "start_menu.h"
 #include "PlayerInterface.h"
 #include "field.h"
+#include "traps.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -93,9 +94,6 @@ int main()
 	srand(time(0));
 
     Field pole;
-
-
-
 	int points[n][3];
 	for (int i = 0; i < n; i++) {
 		points[i][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
@@ -117,10 +115,14 @@ int main()
 
 
 	srand(time(0) + 100);
-	int traps[nt][3];
-	for (int i = 0; i < nt; i++) {
-		traps[i][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
-		traps[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
+
+    vector<trap> traps;
+    traps.reserve(nt);
+	for (int i = 0; i < nt; i++)
+	{
+        trap n_trap(0,0);
+        n_trap.random_generate(pole);
+        traps.push_back(n_trap);
 	}
 
 
@@ -278,16 +280,15 @@ int main()
 
 		//TRAPS ANIMATION
 		for (int i = 0; i < nt; i++) {
-			traps[i][1] += vx; traps[i][2] += vy;
-			x = traps[i][1], y = traps[i][2];
-			img.draw_triangle(x, y, x + trap_lenght, y, x + trap_lenght/2, y - trap_lenght/2, black);
+		    traps[i].Animate(vx, vy);
+			//traps[i][1] += vx; traps[i][2] += vy;
+			x = traps[i].getX(), y = traps[i].getY();
+			traps[i].draw(img);
 
 			if ((x + trap_lenght/2 - x0) * (x + trap_lenght/2 - x0) + (y - trap_lenght/2 - yy0) * (y - trap_lenght/2 - yy0) <= R*R) {
 				R = R/2;
 
-
-				traps[i][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
-				traps[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
+				traps[i].random_generate(pole);
 			}
 			if (smart_bot == true) {
 				for (int j = 0; j < nb; j++) {
@@ -296,8 +297,7 @@ int main()
 					if ((x + trap_lenght / 2 - xb) * (x + trap_lenght / 2 - xb) + (y - trap_lenght / 2 - yb) * (y - trap_lenght / 2 - yb) <= bots[j].bR * bots[j].bR) {
 						bots[j].bR = bots[j].bR / 2;
 						if (bots[j].bR < 20)	bots[j].alive = false;
-						traps[i][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
-						traps[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
+						traps[i].random_generate(pole);
 					}
 				}
 			}

@@ -4,7 +4,6 @@
 
 #include "field.h"
 #include "constances.h"
-#include "field.h"
 
 Field ::  Field()
 {

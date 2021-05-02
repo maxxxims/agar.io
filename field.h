@@ -5,7 +5,6 @@
 #define AGARIO_V2_FIELD_H
 
 #include "Cimg.h"
-#include "PlayerInterface.h"
 using namespace cimg_library;
 
 class Field{

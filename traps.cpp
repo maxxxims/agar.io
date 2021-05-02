@@ -3,18 +3,28 @@
 //
 
 #include "traps.h"
+#include "constances.h"
 
-traps :: traps(int x, int y) : PlayerInterface(x, y) {
+trap :: trap(int x, int y) : PlayerInterface(x, y) {
     this->trapLengt = 100;
 }
 
-void traps ::Animate(int vx, int vy)
+void trap ::draw(CImg<unsigned char> &img) const
 {
-    this->x += vx;
-    this->y += vy;
+    img.draw_triangle(x, y, x + trapLengt, y, x + trapLengt/2, y - trapLengt/2, black);
 }
 
-int traps ::trap_lengt() const
+int trap ::trap_lengt() const
 {
     return this->trap_lengt();
+}
+
+int trap :: getX() const
+{
+    return this->x;
+}
+
+int trap :: getY() const
+{
+    return this->y;
 }
