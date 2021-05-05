@@ -26,6 +26,7 @@ const  unsigned char blue[] = { 0,0,255 };
 const  unsigned char green[] = { 6, 255, 6 };
 const  unsigned char colours[colour][3] = { { 255,20,20 }, { 0,0,255 }, { 6, 255, 6 } };
 const  unsigned char bot_colours[colour][3] = { { 255,138,0 }, { 0,255,255 }, { 255, 0, 255 } };
+//const unsigned char *pcolours[colour] = {&colours[0][0], &colours[1][0], &colours[2][0]};
 
 
 

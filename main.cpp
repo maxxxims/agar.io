@@ -181,7 +181,7 @@ int main()
 		for (int i = 0; i <n; i++) {
 			points[i][1] += vx; points[i][2] += vy;
 			x = points[i][1], y = points[i][2];
-			img.draw_circle(x, y, 10, pcolours[i%colour]);
+			img.draw_circle(x, y, 10, colours[i%colour]);
 
 			if ((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= R * R) {
 				R += 1;
@@ -313,7 +313,7 @@ int main()
         pole.draw(img);
 
 
-		img.draw_circle(x0, yy0, R, pcolours[c]);
+		img.draw_circle(x0, yy0, R, colours[c]);
 		img.draw_text(x0-15, yy0 - 10, "Player", black);
 		dsp.display(img);
 
