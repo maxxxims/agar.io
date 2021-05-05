@@ -30,6 +30,16 @@ public:
         return this->y;
     }
 
+    void setMass(int mass)
+    {
+        this->R = mass;
+    }
+
+    void changeMass(int mass)
+    {
+        this->R += mass;
+    }
+
     int getSize()
     {
         return this->R;

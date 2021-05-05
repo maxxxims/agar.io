@@ -11,7 +11,6 @@ protected:
     int player_colour;
 public:
     Player(int player_colour);
-    void eat(int mass);
     virtual void draw(CImg<unsigned char>& img) const;
 };
 

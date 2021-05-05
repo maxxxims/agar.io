@@ -15,8 +15,3 @@ void Player ::  draw(CImg<unsigned char>& img) const
     img.draw_circle(x0, yy0, R, colours[player_colour]);
     img.draw_text(x0-15, yy0 - 10, "Player", black);
 }
-
-void Player :: eat(int mass)
-{
-    this->R += mass;
-}

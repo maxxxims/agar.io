@@ -6,7 +6,6 @@
 #include "constances.h"
 #include "start_menu.h"
 #include "PlayerInterface.h"
-#include "field.h"
 #include "traps.h"
 #include "point.h"
 #include "Player.h"
@@ -166,8 +165,8 @@ int main()
 ///////////////////////////////////////////// MAIN BODY//////////////////////////////////////////////////////
 	while (!dsp.is_closed()) {
 		img = bg;
-        //user_name.getSize();
-		if (dsp.mouse_x() - D/2 < R && dsp.mouse_y() - H/2 < R) {
+		R = user_name.getSize();
+		if (dsp.mouse_x() - D/2 < user_name.getSize() && dsp.mouse_y() - H/2 < R) {
 			k1x = kof(R)* speed_of(dsp.mouse_x(), R, D);
 			k1y = kof(R)* speed_of(dsp.mouse_y(), R, H);
 		}
@@ -201,7 +200,8 @@ int main()
 			//img.draw_circle(x, y, 10, colours[i%colour]);
 
 			if ((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= R * R) {
-				R += 1;
+				user_name.changeMass(1);
+                R = user_name.getSize();
 
 				points[i].random_generate(pole);
 			}
@@ -265,13 +265,15 @@ int main()
 				img.draw_circle(x, y, bots[i].bR, bots_pcolours[bots[i].bcolour]);
 
 				if (((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= R * R) && R > bots[i].bR) {
-					R += bots[i].bR;
+					user_name.changeMass(bots[i].bR);
+					R = user_name.getSize();
 					bots[i].bR = 0;
 					bots[i].alive = false;
 				}
 				if (((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= bots[i].bR * bots[i].bR) && R < bots[i].bR) {
 					bots[i].bR += R;
-					R = 10;
+					user_name.setMass(10);
+					R = user_name.getSize();
 				}
 				for (int j = i + 1; j < nb; j++) {
 					if (bots[j].alive == true) {
@@ -298,7 +300,8 @@ int main()
 			traps[i].draw(img);
 
 			if ((x + trap_lenght/2 - x0) * (x + trap_lenght/2 - x0) + (y - trap_lenght/2 - yy0) * (y - trap_lenght/2 - yy0) <= R*R) {
-				R = R/2;
+                user_name.setMass(R/2);
+                R = user_name.getSize();
 
 				traps[i].random_generate(pole);
 			}
@@ -326,8 +329,7 @@ int main()
         pole.draw(img);
 
 
-		img.draw_circle(x0, yy0, R, colours[c]);
-		img.draw_text(x0-15, yy0 - 10, "Player", black);
+		user_name.draw(img);
 		dsp.display(img);
 
 		if (R < 20) {
