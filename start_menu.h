@@ -5,6 +5,7 @@
 #ifndef AGARIO_V2_START_MENU_H
 #define AGARIO_V2_START_MENU_H
 #include "Cimg.h"
+#include "constances.h"
 using namespace cimg_library;
 
 

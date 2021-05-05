@@ -13,8 +13,6 @@ private:
 public:
     trap(int x, int y);
     int trap_lengt() const;
-    int getX() const;
-    int getY() const;
     void draw(CImg<unsigned char>& img) const;
 };
 

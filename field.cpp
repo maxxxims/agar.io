@@ -3,8 +3,6 @@
 //
 
 #include "field.h"
-#include "constances.h"
-
 Field ::  Field()
 {
     this->x_max = Xm / 2;

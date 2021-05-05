@@ -5,6 +5,7 @@
 #define AGARIO_V2_FIELD_H
 
 #include "Cimg.h"
+#include "constances.h"
 using namespace cimg_library;
 
 class Field{

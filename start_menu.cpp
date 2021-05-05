@@ -3,7 +3,6 @@
 //
 
 #include "start_menu.h"
-#include "constances.h"
 
 
 StartMenu ::StartMenu() {

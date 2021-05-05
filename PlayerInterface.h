@@ -21,6 +21,15 @@ public:
         this->y = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
     }
 
+    int getX() const
+    {
+        return this->x;
+    }
+    int getY() const
+    {
+        return this->y;
+    }
+
     virtual void Animate(int vx, int vy)
     {
         this->x += vx;

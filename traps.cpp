@@ -3,7 +3,6 @@
 //
 
 #include "traps.h"
-#include "constances.h"
 
 trap :: trap(int x, int y) : PlayerInterface(x, y) {
     this->trapLengt = 100;
@@ -17,14 +16,4 @@ void trap ::draw(CImg<unsigned char> &img) const
 int trap ::trap_lengt() const
 {
     return this->trap_lengt();
-}
-
-int trap :: getX() const
-{
-    return this->x;
-}
-
-int trap :: getY() const
-{
-    return this->y;
 }

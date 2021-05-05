@@ -1,5 +1,4 @@
 #include <iostream>
-#include <Windows.h>
 #include "Cimg.h"
 #include <cstdlib>
 #include <ctime>
@@ -68,7 +67,7 @@ float speed_of(unsigned int a, int rad, int L) {
 
 int main()
 {
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 
 
 
