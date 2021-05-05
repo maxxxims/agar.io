@@ -8,8 +8,6 @@
 #include "PlayerInterface.h"
 
 class trap: public PlayerInterface{
-private:
-    int trapLengt;
 public:
     trap(int x, int y);
     int trap_lengt() const;

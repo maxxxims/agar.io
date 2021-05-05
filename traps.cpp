@@ -5,15 +5,15 @@
 #include "traps.h"
 
 trap :: trap(int x, int y) : PlayerInterface(x, y) {
-    this->trapLengt = 100;
+    this->R = 100;
 }
 
 void trap ::draw(CImg<unsigned char> &img) const
 {
-    img.draw_triangle(x, y, x + trapLengt, y, x + trapLengt/2, y - trapLengt/2, black);
+    img.draw_triangle(x, y, x + R, y, x + R/2, y - R/2, black);
 }
 
 int trap ::trap_lengt() const
 {
-    return this->trap_lengt();
+    return this->R;
 }

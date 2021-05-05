@@ -11,7 +11,7 @@ using namespace cimg_library;
 
 class PlayerInterface{
 protected:
-    int x, y;
+    int x, y, R;
 public:
     PlayerInterface(int x, int y):x(x), y(y){}
 
@@ -28,6 +28,11 @@ public:
     int getY() const
     {
         return this->y;
+    }
+
+    int getSize()
+    {
+        return this->R;
     }
 
     virtual void Animate(int vx, int vy)

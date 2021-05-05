@@ -7,10 +7,11 @@
 
 point :: point(int x, int y, int random_parameter): PlayerInterface(x,y)
 {
-    this->random_parameter = random_parameter;
+    this->random_parameter = random_parameter % colour;
+    this->R = 10;
 }
 
 void point ::  draw(CImg<unsigned char>& img) const
 {
-    img.draw_circle(x, y, 10, pclr[random_parameter%colour]);
+    img.draw_circle(x, y, R, colours[random_parameter]);
 }

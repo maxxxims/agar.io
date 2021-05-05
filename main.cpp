@@ -8,7 +8,8 @@
 #include "PlayerInterface.h"
 #include "field.h"
 #include "traps.h"
-
+#include "point.h"
+#include "Player.h"
 using namespace std;
 using namespace cimg_library;
 int speed = 2;
@@ -84,7 +85,10 @@ int main()
 
 	int xb=0, yb=0, x, y, index;                                            // useful symbols
     int  R = 20;                                                            // parametrs
+
 	int rmin = 10000, trap_lenght = 100;
+
+
 
 	bool start = false;
 	bool smart_bot = false;
@@ -93,11 +97,21 @@ int main()
 	srand(time(0));
 
     Field pole;
-	int points[n][3];
+    vector<point> points;
+    points.reserve(n);
+    for(int i = 0; i < n; i++)
+    {
+        point new_point(0,0,i);
+        new_point.random_generate(pole);
+        points.push_back(new_point);
+    }
+
+	/*int points[n][3];
 	for (int i = 0; i < n; i++) {
 		points[i][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
 		points[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
-	}
+	}*/
+
 
 	bot bots[nb];
 	for (int i = 0; i < nb; i++) {
@@ -147,11 +161,12 @@ int main()
 
 	int  vx, vy, z = 500;
 	float k = 2, k1x = 2, k1y = 2;
+	Player user_name(c);
 
 ///////////////////////////////////////////// MAIN BODY//////////////////////////////////////////////////////
 	while (!dsp.is_closed()) {
 		img = bg;
-
+        //user_name.getSize();
 		if (dsp.mouse_x() - D/2 < R && dsp.mouse_y() - H/2 < R) {
 			k1x = kof(R)* speed_of(dsp.mouse_x(), R, D);
 			k1y = kof(R)* speed_of(dsp.mouse_y(), R, H);
@@ -179,18 +194,18 @@ int main()
 
 		// ANIMATION OF POINTS
 		for (int i = 0; i <n; i++) {
-			points[i][1] += vx; points[i][2] += vy;
-			x = points[i][1], y = points[i][2];
-			img.draw_circle(x, y, 10, colours[i%colour]);
+		    points[i].Animate(vx, vy);
+			//points[i][1] += vx; points[i][2] += vy;
+			x = points[i].getX(), y = points[i].getY();
+			points[i].draw(img);
+			//img.draw_circle(x, y, 10, colours[i%colour]);
 
 			if ((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= R * R) {
 				R += 1;
 
-
-				points[i][1] = pole.getx1() + rand() % ( pole.getx2() - pole.getx1() + 1);
-				points[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
+				points[i].random_generate(pole);
 			}
-			x = points[i][1], y = points[i][2];
+            x = points[i].getX(), y = points[i].getY();
 
 			for (int j = 0; j < nb; j++) {
 				if (bots[j].alive == true) {
@@ -198,8 +213,7 @@ int main()
 					if ((x - xb) * (x - xb) + (y - yb) * (y - yb) <= bots[j].bR * bots[j].bR) {
 						bots[j].bR += 1;
 
-						points[i][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
-						points[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
+						points[i].random_generate(pole);
 					}
 					int lon = distance(xb, yb, x, y);
 					if (lon <= bots[j].bdistance) {
@@ -219,8 +233,8 @@ int main()
 				index = bots[i].bpoint;
 				x = bots[i].bx, y = bots[i].by;
 				k = kof(bots[i].bR);
-				if (x >= points[index][1]) {
-					if (x == points[index][1])	bots[i].bvx = 0;
+				if (x >= points[index].getX()) {
+					if (x == points[index].getX())	bots[i].bvx = 0;
 					else	bots[i].bvx = -1* speed * k;
 
 				}
@@ -229,8 +243,8 @@ int main()
 				}
 
 
-				if (y >= points[index][2]) {
-					if (y == points[index][2])	bots[i].bvy = 0;
+				if (y >= points[index].getY()) {
+					if (y == points[index].getY())	bots[i].bvy = 0;
 					else	bots[i].bvy = -1* speed * k;
 
 				}
@@ -241,12 +255,11 @@ int main()
 				bots[i].bx += vx + bots[i].bvx; bots[i].by += vy + bots[i].bvy;
 				x = bots[i].bx, y = bots[i].by;
 
-				if ((x - points[index][1]) * (x - points[index][1]) + (y - points[index][2]) * (y - points[index][2]) <= bots[i].bR * bots[i].bR) {
+				if ((x - points[index].getX()) * (x - points[index].getX()) + (y - points[index].getY()) * (y - points[index].getY()) <= bots[i].bR * bots[i].bR) {
 					bots[i].bR += (mass / bots[i].bR);
 
 
-					points[index][1] = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
-					points[index][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
+					points[i].random_generate(pole);
 				}
 
 				img.draw_circle(x, y, bots[i].bR, bots_pcolours[bots[i].bcolour]);
