@@ -12,6 +12,7 @@ public:
     trap(int x, int y);
     int trap_lengt() const;
     void draw(CImg<unsigned char>& img) const;
+
 };
 
 

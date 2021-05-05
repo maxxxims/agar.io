@@ -7,8 +7,6 @@
 #include "PlayerInterface.h"
 
 class Player: public PlayerInterface{
-protected:
-    int player_colour;
 public:
     Player(int player_colour);
     virtual void draw(CImg<unsigned char>& img) const;

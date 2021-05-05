@@ -7,8 +7,6 @@
 #include "PlayerInterface.h"
 
 class point: public PlayerInterface{
-protected:
-    int random_parameter;
 public:
     point(int x, int y, int random_parameter);
     void draw(CImg<unsigned char>& img) const;

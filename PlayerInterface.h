@@ -11,9 +11,9 @@ using namespace cimg_library;
 
 class PlayerInterface{
 protected:
-    int x, y, R;
+    int x, y, R, clr_parameter;
 public:
-    PlayerInterface(int x, int y):x(x), y(y){}
+    PlayerInterface(int x, int y, int clr_parameter):x(x), y(y), clr_parameter(clr_parameter){}
 
     void random_generate(Field& pole)
     {

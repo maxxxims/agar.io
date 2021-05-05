@@ -5,13 +5,12 @@
 #include "point.h"
 
 
-point :: point(int x, int y, int random_parameter): PlayerInterface(x,y)
+point :: point(int x, int y, int random_parameter): PlayerInterface(x,y,random_parameter % colour)
 {
-    this->random_parameter = random_parameter % colour;
     this->R = 10;
 }
 
 void point ::  draw(CImg<unsigned char>& img) const
 {
-    img.draw_circle(x, y, R, colours[random_parameter]);
+    img.draw_circle(x, y, R, colours[clr_parameter]);
 }

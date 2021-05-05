@@ -4,7 +4,7 @@
 
 #include "traps.h"
 
-trap :: trap(int x, int y) : PlayerInterface(x, y) {
+trap :: trap(int x, int y) : PlayerInterface(x, y, 0) {
     this->R = 100;
 }
 
