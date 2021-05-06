@@ -9,13 +9,15 @@
 #include "traps.h"
 #include "point.h"
 #include "Player.h"
+#include "bot.h"
+#include <cmath>
 using namespace std;
 using namespace cimg_library;
 int speed = 2;
 
 
 
-struct bot {
+/*struct bot {
 	int bx;
 	int bvx;
 	int by;
@@ -25,7 +27,7 @@ struct bot {
 	int bpoint;
 	int bdistance;
 	bool alive;
-};
+};*/
 
 
 float kof(int rad) {
@@ -71,7 +73,7 @@ int main()
 
 
 
-	const unsigned char* pcolours[colour];
+	/*const unsigned char* pcolours[colour];
 	for (int i = 0; i < colour; i++) {
 		pcolours[i] = &colours[i][0];
 	}
@@ -79,10 +81,10 @@ int main()
 	const unsigned char* bots_pcolours[colour];
 	for (int i = 0; i < colour; i++) {
 		bots_pcolours[i] = &bot_colours[i][0];
-	}
+	}*/
 
 
-	int xb=0, yb=0, x, y, index;                                            // useful symbols
+	int xb=0, yb=0, x=0, y=0, index = 0;                                            // useful symbols
     int  R = 20;                                                            // parametrs
 
 	int rmin = 10000, trap_lenght = 100;
@@ -111,7 +113,7 @@ int main()
 		points[i][2] = pole.gety1() + rand() % (pole.gety2() - pole.gety1() + 1);
 	}*/
 
-
+    /*
 	bot bots[nb];
 	for (int i = 0; i < nb; i++) {
 		bots[i].bx = pole.getx1() + rand() % (pole.getx2() - pole.getx1() + 1);
@@ -123,8 +125,15 @@ int main()
 		bots[i].bcolour = i % colour;
 		bots[i].bpoint = 0;
 		bots[i].bdistance = rmin;
-	}
+	}*/
 
+    vector<bot> bots;
+    for(int i = 0; i < nb; i++)
+    {
+        bot new_bot(0,0,i);
+        new_bot.random_generate(pole);
+        bots.push_back(new_bot);
+    }
 
 	srand(time(0) + 100);
 
@@ -208,17 +217,17 @@ int main()
             x = points[i].getX(), y = points[i].getY();
 
 			for (int j = 0; j < nb; j++) {
-				if (bots[j].alive == true) {
-					xb = bots[j].bx, yb = bots[j].by;
-					if ((x - xb) * (x - xb) + (y - yb) * (y - yb) <= bots[j].bR * bots[j].bR) {
-						bots[j].bR += 1;
+				if (bots[j].isAlive() == true) {
+					xb = bots[j].getX(), yb = bots[j].getY();
+					if ((x - xb) * (x - xb) + (y - yb) * (y - yb) <= pow(bots[j].getSize(),2)) {
+						bots[j].changeMass(1);
 
 						points[i].random_generate(pole);
 					}
 					int lon = distance(xb, yb, x, y);
-					if (lon <= bots[j].bdistance) {
-						bots[j].bpoint = i;
-						bots[j].bdistance = lon;
+					if (lon <= bots[j].getDist()) {
+						bots[j].setPoint(i);
+						bots[j].setDist(lon);
 					}
 
 
@@ -229,67 +238,68 @@ int main()
 
 		// BOTS ANIMATION
 		for (int i = 0; i < nb; i++) {
-			if (bots[i].alive == true) {
-				index = bots[i].bpoint;
-				x = bots[i].bx, y = bots[i].by;
-				k = kof(bots[i].bR);
+			if (bots[i].isAlive() == true) {
+				index = bots[i].getPoint();
+				x = bots[i].getX(), y = bots[i].getY();
+				k = kof(bots[i].getSize());
 				if (x >= points[index].getX()) {
-					if (x == points[index].getX())	bots[i].bvx = 0;
-					else	bots[i].bvx = -1* speed * k;
+					if (x == points[index].getX())	bots[i].setVx(0);
+					else	bots[i].setVx(-1* speed * k);
 
 				}
 				else {
-					bots[i].bvx = speed * k;
+					bots[i].setVx(speed * k);
 				}
 
 
 				if (y >= points[index].getY()) {
-					if (y == points[index].getY())	bots[i].bvy = 0;
-					else	bots[i].bvy = -1* speed * k;
+					if (y == points[index].getY())	bots[i].setVy(0);
+					else	bots[i].setVy(-1* speed * k);
 
 				}
 				else {
-					bots[i].bvy =  speed * k;
+					bots[i].setVy(speed * k);
 				}
 
-				bots[i].bx += vx + bots[i].bvx; bots[i].by += vy + bots[i].bvy;
-				x = bots[i].bx, y = bots[i].by;
+				//bots[i].bx += vx + bots[i].bvx; bots[i].by += vy + bots[i].bvy;
+				bots[i].Animate(vx, vy);
+				x = bots[i].getX(), y = bots[i].getY();
 
-				if ((x - points[index].getX()) * (x - points[index].getX()) + (y - points[index].getY()) * (y - points[index].getY()) <= bots[i].bR * bots[i].bR) {
-					bots[i].bR += (mass / bots[i].bR);
+				if ((x - points[index].getX()) * (x - points[index].getX()) + (y - points[index].getY()) * (y - points[index].getY()) <= pow(bots[i].getSize(),2)) {
+					bots[i].changeMass(mass / bots[i].getSize());
 
-
-					points[i].random_generate(pole);
+					points[index].random_generate(pole);
 				}
 
-				img.draw_circle(x, y, bots[i].bR, bots_pcolours[bots[i].bcolour]);
+				//img.draw_circle(x, y, bots[i].bR, bots_pcolours[bots[i].bcolour]);
+				bots[i].draw(img);
 
-				if (((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= R * R) && R > bots[i].bR) {
-					user_name.changeMass(bots[i].bR);
+				if (((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= R * R) && R > bots[i].getSize()) {
+					user_name.changeMass(bots[i].getSize());
 					R = user_name.getSize();
-					bots[i].bR = 0;
-					bots[i].alive = false;
+					bots[i].setMass(0);
+					bots[i].killBot();
 				}
-				if (((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= bots[i].bR * bots[i].bR) && R < bots[i].bR) {
-					bots[i].bR += R;
+				if (((x - x0) * (x - x0) + (y - yy0) * (y - yy0) <= pow(bots[i].getSize(),2)) && R < bots[i].getSize()) {
+					bots[i].changeMass(R);
 					user_name.setMass(10);
 					R = user_name.getSize();
 				}
 				for (int j = i + 1; j < nb; j++) {
-					if (bots[j].alive == true) {
-						if (((x - bots[j].bx) * (x - bots[j].bx) + (y - bots[j].by) * (y - bots[j].by) <= bots[i].bR * bots[i].bR) && bots[i].bR >bots[j].bR) {
-							bots[i].bR += bots[j].bR;
-							bots[j].alive = false;
+					if (bots[j].isAlive() == true) {
+						if (((x - bots[j].getX()) * (x - bots[j].getX()) + (y - bots[j].getY()) * (y - bots[j].getY()) <= bots[i].getSize() * bots[i].getSize()) && bots[i].getSize() >bots[j].getSize()) {
+							bots[i].changeMass(bots[j].getSize());
+							bots[j].killBot();
 						}
-						if (((x - bots[j].bx) * (x - bots[j].bx) + (y - bots[j].by) * (y - bots[j].by) <= bots[j].bR * bots[j].bR) && bots[j].bR > bots[i].bR) {
-							bots[j].bR += bots[i].bR;
-							bots[i].alive = false;
+						if (((x - bots[j].getX()) * (x - bots[j].getX()) + (y - bots[j].getY()) * (y - bots[j].getY()) <= bots[j].getSize() * bots[j].getSize()) && bots[j].getSize() > bots[i].getSize()) {
+							bots[j].changeMass(bots[i].getSize());
+							bots[i].killBot();
 						}
 					}
 
 				}
 			}
-			img.draw_text(x - 15, y - 10, "I'm bot", black);
+			//img.draw_text(x - 15, y - 10, "I'm bot", black);
 		}
 
 		//TRAPS ANIMATION
@@ -307,11 +317,11 @@ int main()
 			}
 			if (smart_bot == true) {
 				for (int j = 0; j < nb; j++) {
-					xb = bots[j].bx;
-					yb = bots[j].by;
-					if ((x + trap_lenght / 2 - xb) * (x + trap_lenght / 2 - xb) + (y - trap_lenght / 2 - yb) * (y - trap_lenght / 2 - yb) <= bots[j].bR * bots[j].bR) {
-						bots[j].bR = bots[j].bR / 2;
-						if (bots[j].bR < 20)	bots[j].alive = false;
+					xb = bots[j].getX();
+					yb = bots[j].getY();
+					if ((x + trap_lenght / 2 - xb) * (x + trap_lenght / 2 - xb) + (y - trap_lenght / 2 - yb) * (y - trap_lenght / 2 - yb) <= bots[j].getSize()* bots[j].getSize()) {
+						bots[j].setMass(bots[j].getSize() / 2);
+						if (bots[j].getSize() < 20) 	bots[j].killBot();
 						traps[i].random_generate(pole);
 					}
 				}
