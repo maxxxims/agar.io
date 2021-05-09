@@ -70,9 +70,10 @@ float speed_of(unsigned int a, int rad, int L) {
 
 int main()
 {
-
-    if(GamePlay::get_instance() != nullptr){
-        GamePlay& game_play = *GamePlay::get_instance();
+    GamePlay& game_play = *GamePlay::get_instance();
+    game_play.Init();
+    while(game_play.isOpen())
+    {
         game_play.MainProcess();
     }
     //GamePlay game_play;

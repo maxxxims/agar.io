@@ -35,8 +35,10 @@ private:
     int c;
 public:
     GamePlay();
+    void Init();
     void MainProcess();
     void setPlayerColour(int c);
+    bool isOpen()const;
     static GamePlay* get_instance();
 };
 

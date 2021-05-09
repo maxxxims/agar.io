@@ -30,10 +30,8 @@ GamePlay :: GamePlay(): bg(D, H, 1, 3, 255), dsp(D, H, "Agar.io", 0), pole()
     }
 }
 
-void GamePlay :: MainProcess()
+void GamePlay ::Init()
 {
-
-
     int x, y;
     while (start_menu->is_open() == false) {
         x = dsp.mouse_x();
@@ -45,9 +43,11 @@ void GamePlay :: MainProcess()
     }
     setPlayerColour(c);
     user_name = new Player(c);
+}
 
-    while(!dsp.is_closed())
-    {
+void GamePlay :: MainProcess()
+{
+
         img = bg;
         pole.draw(img);
         user_name->draw(img);
@@ -57,13 +57,17 @@ void GamePlay :: MainProcess()
             it->draw(img);
         }
 
-
         dsp.display(img);
-    }
 }
+
 
 
 void GamePlay ::setPlayerColour(int c)
 {
     this->c = c;
+}
+
+bool GamePlay :: isOpen() const
+{
+    return !(dsp.is_closed());
 }
