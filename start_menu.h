@@ -6,6 +6,7 @@
 #define AGARIO_V2_START_MENU_H
 #include "Cimg.h"
 #include "constances.h"
+#include "Gameplay.h"
 using namespace cimg_library;
 
 

@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "bot.h"
 #include <cmath>
+#include "Gameplay.h"
 using namespace std;
 using namespace cimg_library;
 int speed = 2;
@@ -69,11 +70,18 @@ float speed_of(unsigned int a, int rad, int L) {
 
 int main()
 {
-	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+
+    if(GamePlay::get_instance() != nullptr){
+        GamePlay& game_play = *GamePlay::get_instance();
+        game_play.MainProcess();
+    }
+    //GamePlay game_play;
+    //game_play.MainProcess();
+	/* ::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 
 
 
-	/*const unsigned char* pcolours[colour];
+	const unsigned char* pcolours[colour];
 	for (int i = 0; i < colour; i++) {
 		pcolours[i] = &colours[i][0];
 	}
@@ -81,7 +89,7 @@ int main()
 	const unsigned char* bots_pcolours[colour];
 	for (int i = 0; i < colour; i++) {
 		bots_pcolours[i] = &bot_colours[i][0];
-	}*/
+	}
 
 
 	int xb=0, yb=0, x=0, y=0, index = 0;                                            // useful symbols
@@ -125,7 +133,7 @@ int main()
 		bots[i].bcolour = i % colour;
 		bots[i].bpoint = 0;
 		bots[i].bdistance = rmin;
-	}*/
+	}
 
     vector<bot> bots;
     for(int i = 0; i < nb; i++)
@@ -334,7 +342,7 @@ int main()
 		img.draw_line(line[0], line[2], 0, line[1], line[2], 0, black);
 		img.draw_line(line[0], line[3], 0, line[1], line[3], 0, black);
 		img.draw_line(line[0], line[2], 0, line[0], line[3], 0, black );
-		img.draw_line(line[1], line[2], 0, line[1], line[3], 0, black);*/
+		img.draw_line(line[1], line[2], 0, line[1], line[3], 0, black);
 
         pole.draw(img);
 
@@ -349,7 +357,7 @@ int main()
 			}
 			exit(0);
 		}
-	}
+	}*/
 }
 
 
