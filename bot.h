@@ -10,14 +10,15 @@ class bot: public PlayerInterface{
 protected:
     bool Alive;
     int vx, vy, short_dist, bpoint;
+    PlayerInterface* bots_point;
 public:
     bot(int x, int y, int clr);
     virtual void Animate(int vx, int vy);
     virtual void draw(CImg<unsigned char>& img) const;
     bool isAlive() const;
     void killBot();
-    void setPoint(int i);
-    int getPoint() const;
+    void setPoint(PlayerInterface* p);
+    PlayerInterface* getPoint() const;
     void setDist(int i);
     int getDist() const;
     void setVx(int vx);

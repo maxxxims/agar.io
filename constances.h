@@ -9,7 +9,7 @@ const int colour = 3; // number of colours don't change
 const int n = 500; // number of points
 const int nt = 10; // number of traps
 const int nb = 7; // number of bots
-
+const int speed = 2;
 
 const int D = 1600, H = 800, mass = 200;                     // size of area
 

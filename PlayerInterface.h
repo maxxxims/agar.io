@@ -8,12 +8,11 @@
 #include "field.h"
 #include <cstdlib>
 using namespace cimg_library;
-
 class PlayerInterface{
 protected:
-    int x, y, R, clr_parameter;
+    int x, y, R, clr_parameter, delta_R, current_R;
 public:
-    PlayerInterface(int x, int y, int clr_parameter):x(x), y(y), clr_parameter(clr_parameter){}
+    PlayerInterface(int x, int y, int clr_parameter):x(x), y(y), clr_parameter(clr_parameter), delta_R(0), R(10){}
 
     void random_generate(Field& pole)
     {
@@ -32,12 +31,13 @@ public:
 
     void setMass(int mass)
     {
-        this->R = mass;
+        changeMass(mass - this->R);
+        //this->R = mass;
     }
 
     void changeMass(int mass)
     {
-        this->R += mass;
+        this->delta_R += mass;
     }
 
     int getSize()
@@ -45,10 +45,26 @@ public:
         return this->R;
     }
 
+    int getCurrentSize()
+    {
+        return this->current_R;
+    }
+
     virtual void Animate(int vx, int vy)
     {
+        current_R = R + delta_R;
         this->x += vx;
         this->y += vy;
+        if(delta_R > 0)
+        {
+            this->R++;
+            this->delta_R--;
+        }
+        if(delta_R < 0)
+        {
+            this->R--;
+            this->delta_R++;
+        }
     }
     //virtual void animation();
     virtual void draw(CImg<unsigned char>& img) const = 0;

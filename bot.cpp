@@ -24,6 +24,16 @@ void bot :: Animate(int vx, int vy)
 {
     this->x += vx + this->vx;
     this->y += vy + this->vy;
+    if(delta_R > 0)
+    {
+        this->R++;
+        this->delta_R--;
+    }
+    if(delta_R < 0)
+    {
+        this->R--;
+        this->delta_R++;
+    }
 }
 
 bool bot :: isAlive() const
@@ -36,13 +46,13 @@ void bot :: killBot()
     this->Alive = false;
 }
 
-void bot :: setPoint(int i)
+void bot :: setPoint(PlayerInterface* p)
 {
-    this->bpoint = i;
+    this->bots_point = p;
 }
-int bot :: getPoint() const
+PlayerInterface* bot :: getPoint() const
 {
-    return this->bpoint;
+    return this->bots_point;
 }
 
 void bot :: setDist(int i)

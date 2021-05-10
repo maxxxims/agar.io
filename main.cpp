@@ -14,7 +14,7 @@
 #include "Gameplay.h"
 using namespace std;
 using namespace cimg_library;
-int speed = 2;
+//int speed = 2;
 
 
 
@@ -31,24 +31,6 @@ int speed = 2;
 };*/
 
 
-float kof(int rad) {
-	float c=0;
-	if (rad >= 20)		c = 3.8;
-	if (rad >= 50)		c = 3.5;
-	if (rad >= 100)		c = 3;
-	if (rad >= 150)		c = 2.8;
-	if (rad >= 200)		c = 2.5;
-	if (rad >= 250)		c = 2;
-	if (rad >= 300)		c = 1.8;
-	if (rad >= 380)		c = 1.5;
-	if (rad >= 500)		c = 1;
-	if (rad >= 600)		c = 0.5;
-	return c;
-}
-
-int distance(int x1, int y1, int x2, int y2) {
-	return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-}
 
 int generate(int a, int b, int o, int rad) {
 	srand(time(0));
@@ -60,21 +42,30 @@ int generate(int a, int b, int o, int rad) {
 	else	return vol;
 }
 
-float speed_of(unsigned int a, int rad, int L) {
-	int sh = a - L / 2;
-	if (sh < 0)	sh *= -1;
-	if (sh<=100)		return 0.5;
-	else	return 1;
-
-}
 
 int main()
 {
+    srand(time(0));
     GamePlay& game_play = *GamePlay::get_instance();
-    game_play.Init();
+
+
     while(game_play.isOpen())
     {
-        game_play.MainProcess();
+        if(game_play.isStartMenu())
+        {
+            game_play.startMenu_animation();
+        }
+        else
+        {
+            game_play.MainProcess();
+            game_play.point_animation();
+            game_play.player_animation();
+            game_play.traps_animation();
+            game_play.bots_animation();
+            game_play.draw();
+        }
+
+
     }
     //GamePlay game_play;
     //game_play.MainProcess();
@@ -340,11 +331,6 @@ int main()
 
 
 		/* DRAW LINES
-		img.draw_line(line[0], line[2], 0, line[1], line[2], 0, black);
-		img.draw_line(line[0], line[3], 0, line[1], line[3], 0, black);
-		img.draw_line(line[0], line[2], 0, line[0], line[3], 0, black );
-		img.draw_line(line[1], line[2], 0, line[1], line[3], 0, black);
-
         pole.draw(img);
 
 

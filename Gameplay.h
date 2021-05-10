@@ -14,8 +14,8 @@
 #include "point.h"
 #include "Player.h"
 #include "bot.h"
-#include <array>
-using std::array;
+#include <list>
+using std::list;
 using std::vector;
 
 class StartMenu;
@@ -27,18 +27,31 @@ private:
     StartMenu* start_menu;
     Field pole;
     Player* user_name;
-    vector<bot> bots;
+    list<bot> bots;
     vector<trap> traps;
     vector<point> points;
-    bool smart_bot;
+    bool smart_bot, start;
     static GamePlay* instance;
-    int c;
+    int c, vx, vy, counter;
+    float k, k1x, k1y;
+
+    void Init();
+    void manage_bots();
 public:
     GamePlay();
-    void Init();
     void MainProcess();
+
+    void startMenu_animation();
+    void point_animation();
+    void player_animation();
+    void traps_animation();
+    void bots_animation();
+    void draw();
     void setPlayerColour(int c);
+
     bool isOpen()const;
+    bool isStartMenu()const;
+
     static GamePlay* get_instance();
 };
 
