@@ -13,8 +13,8 @@ protected:
     PlayerInterface* bots_point;
 public:
     bot(int x, int y, int clr);
-    virtual void Animate(int vx, int vy);
-    virtual void draw(CImg<unsigned char>& img) const;
+    virtual void Animate(int vx, int vy) override;
+    virtual void draw(CImg<unsigned char>& img) const override;
     bool isAlive() const;
     void killBot();
     void setPoint(PlayerInterface* p);

@@ -9,7 +9,7 @@
 class Player: public PlayerInterface{
 public:
     Player(int player_colour);
-    virtual void draw(CImg<unsigned char>& img) const;
+    virtual void draw(CImg<unsigned char>& img) const override;
 };
 
 #endif //AGARIO_V2_PLAYER_H

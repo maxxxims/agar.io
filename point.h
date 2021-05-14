@@ -9,7 +9,7 @@
 class point: public PlayerInterface{
 public:
     point(int x, int y, int random_parameter);
-    void draw(CImg<unsigned char>& img) const;
+    void draw(CImg<unsigned char>& img) const override;
 };
 
 #endif //AGARIO_V2_POINT_H
