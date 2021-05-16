@@ -93,8 +93,7 @@ void GamePlay ::startMenu_animation()
         y = dsp.mouse_y();
         img = bg;
         start_menu->process(x, y, img, dsp);
-        smart_bot = start_menu->what_bots();
-        dsp.display(img);
+        draw();
     }
 
     k = 2, k1x = 2, k1y = 2;
@@ -107,7 +106,7 @@ void GamePlay ::startMenu_animation()
 
 }
 
-void GamePlay ::point_animation()
+void GamePlay :: point_animation()
 {
 
         img = bg;
@@ -271,6 +270,7 @@ void GamePlay ::draw()
 {
     manage_bots();
     dsp.display(img);
+    img = bg;
 }
 
 void GamePlay ::manage_bots()
@@ -329,6 +329,11 @@ void GamePlay::MainProcess()
 void GamePlay :: setPlayerColour(int c)
 {
     this->c = c;
+}
+
+void GamePlay :: setBotsBrain(bool f)
+{
+    this->smart_bot = f;
 }
 
 bool GamePlay :: isOpen() const

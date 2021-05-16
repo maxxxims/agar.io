@@ -43,6 +43,7 @@ void StartMenu :: process(int x, int y, CImg<unsigned char>& img, CImgDisplay& d
     if(smart_bot==false)	img.draw_circle(x0 + 270, yy0 + 300, 10, green);
     if(smart_bot == true)	img.draw_circle(x0 + 270, yy0 + 300, 10, red);
     GamePlay::get_instance()->setPlayerColour(clr);
+    GamePlay::get_instance()->setBotsBrain(smart_bot);
 
 }
 

@@ -48,6 +48,7 @@ public:
     void bots_animation();
     void draw();
     void setPlayerColour(int c);
+    void setBotsBrain(bool f);
 
     bool isOpen()const;
     bool isStartMenu()const;
